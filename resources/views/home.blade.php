@@ -2,14 +2,16 @@
     {{-- This is how we pass data to the $title variable in the layout component --}}
     <x-slot:title>Home</x-slot:title>
     <div class="max-w-2xl mx-auto">
+        @foreach ($pings as $ping)
         <div class="card bg-base-100 shadow mt-8">
             <div class="card-body">
                 <div>
-                    <h1 class="text-3xl font-bold">Welcome to PingMe!</h1>
-                    <p class="mt-4 text-base-content/60">This is your brand new Laravel application. Time to make it
-                        sing (or chirp)!</p>
+                    <div class="font-semibold">{{$ping['author']}}</div>
+                    <div class="mt-2">{{$ping['message']}}</div>
+                    <div class="text-sm text-gray-500 mt-2">{{$ping['time']}}</div>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
 </x-layout>
