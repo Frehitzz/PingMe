@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('pingme', function (Blueprint $table) {
             $table->id();
+            // nullable() - it is okay to empty
+            // constrained() - enforce strict rule
+            // cascadeonly() -  If you delete a user from your app, the database will automatically delete all messages linked to
+            //                  that user ID as well.
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('message', 255);
             $table->timestamps();
         });
     }
