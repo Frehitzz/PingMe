@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pingme;
 use Illuminate\Http\Request;
 
 class PingController extends Controller
@@ -11,33 +12,10 @@ class PingController extends Controller
      */
     public function index()
     {
-        $pings = [
-            [
-                'author' => 'Fritz Harly',
-                'message' => 'Heyy, good morning everyone!',
-                'time' => '3 hours ago',
-            ],
-            [
-                'author' => 'Christine Banega`',
-                'message' => 'What\'s for lunch?',
-                'time' => '5 minutes ago',
-            ],
-            [
-                'author' => 'Reynaldo Tolentino',
-                'message' => 'I\'m running late!',
-                'time' => '10 minutes ago',
-            ],
-            [
-                'author' => 'Harlyne Rose`',
-                'message' => 'See you later at the meeting!',
-                'time' => '15 minutes ago',
-            ],
-            [
-                'author' => 'Renante',
-                'message' => 'Let\'s go out later?',
-                'time' => '3 hours ago',
-            ],
-        ];
+        $pings = Pingme::with('user')
+            ->latest()
+            ->take(50)
+            ->get();
 
         // making this index() recognie our home page 'home'
         // to pass the $pings data to the home page
