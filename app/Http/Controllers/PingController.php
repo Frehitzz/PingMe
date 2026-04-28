@@ -20,6 +20,8 @@ class PingController extends Controller
         // making this index() recognie our home page 'home'
         // to pass the $pings data to the home page
         return view('home', ['pings' => $pings]);
+        // 'pings' - this will be the name of the variable you will use on blade file
+        // $pings -
     }
 
     /**
