@@ -5,3 +5,4 @@ use Illuminate\Support\Facades\Route;
 
 // Routing looks like in laravel
 Route::get('/', [PingController::class, 'index']);
+Route::post('/addping', [PingController::class, 'store']);

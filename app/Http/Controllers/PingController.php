@@ -37,7 +37,17 @@ class PingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // adding ping message
+        $validated = $request->validate([
+            'message' => 'required|string|max:255|min:5', // validation rules
+        ]);
+
+        // The "Pingme" must same of the model file for this
+        Pingme::create([
+            'message' => $validated['message'],
+        ]);
+
+        return redirect('/')->with('success', 'Ping succesfully created');
     }
 
     /**

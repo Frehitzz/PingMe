@@ -1,10 +1,24 @@
 <x-layout>
+    
+    {{-- 
+    TO SEE THE ERROR
+
+    @if ($errors->any())
+    {{ dd($errors->all()) }}
+    @endif 
+    
+    --}}
     <x-slot:title>
         Home Feed
     </x-slot:title>
-
+    {{-- Form modal for adding pings --}}
+    <x-addform></x-addform>
     <div class="max-w-2xl mx-auto">
-        <h1 class="text-3xl font-bold mt-8">Latest Pings</h1>
+        <div class="flex justify-between items-center mt-8">
+            <h1 class="text-3xl font-bold">Latest Pings</h1>
+            {{-- Add ping btn --}}
+            <button class="btn btn-primary" onclick="addform_modal.showModal()">Add Ping</button>
+        </div>
 
         <div class="space-y-4 mt-8">
             @forelse ($pings as $ping)
