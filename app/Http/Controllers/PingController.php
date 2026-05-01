@@ -61,24 +61,36 @@ class PingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Pingme $ping)
     {
-        //
+        return view('pings.edit', compact('ping'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Pingme $ping)
     {
-        //
+        // validating ping message
+        $validated = $request->validate([
+            'message' => 'required|string|max:255|min:5', // validation rules
+        ]);
+
+        // Update the existing ping instead of creating a new one
+        $ping->update([
+            'message' => $validated['message'],
+        ]);
+
+        return redirect('/')->with('success', 'Ping succesfully updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Pingme $ping)
     {
-        //
+        $ping->delete();
+
+        return redirect('/')->with('success', 'Your ping has been deleted!');
     }
 }
