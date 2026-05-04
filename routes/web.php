@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\PingController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -26,6 +27,15 @@ Route::view('/register', 'auth.register')
 Route::post('/register', UserController::class)
     ->middleware('guest');
 
+    // Login
+Route::view('/login', 'auth.login')
+->middleware('guest') 
+->name('login');
+
+Route::post('login',Login::class)
+->middleware('guest');
+ 
     // logout
 Route::post('/logout', LogoutController::class)
-->middleware('auth');
+->middleware('auth')
+->name('logout');

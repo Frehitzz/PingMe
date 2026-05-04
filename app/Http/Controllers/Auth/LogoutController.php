@@ -13,8 +13,11 @@ class LogoutController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $user = $request->user();
         Auth::logout();
+        // destroy all data currently stored in the user session
+        $request->session()->invalidate(); 
+        // generates a new random csrf toekn
+        $request->session()->regenerateToken(); 
         return redirect('/')->with('success','You\'ve Successfully Log out');
     }
 }
