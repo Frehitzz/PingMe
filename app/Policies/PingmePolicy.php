@@ -6,7 +6,7 @@ use App\Models\Pingme;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class PingPolicy
+class PingmePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -37,7 +37,7 @@ class PingPolicy
      */
     public function update(User $user, Pingme $pingme): bool
     {
-        return false;
+        return $pingme->user()->is($user);
     }
 
     /**
@@ -45,7 +45,7 @@ class PingPolicy
      */
     public function delete(User $user, Pingme $pingme): bool
     {
-        return false;
+        return $this->update($user, $pingme);
     }
 
     /**

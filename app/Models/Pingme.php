@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method bool update(array $attributes = [], array $options = [])
+ * @method bool|null delete()
+ */
 class Pingme extends Model
 {
     protected $table = 'pingme';

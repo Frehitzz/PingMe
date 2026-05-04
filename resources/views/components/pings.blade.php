@@ -36,35 +36,22 @@
                         @endif
                     </div>
 
-                    <div class="flex gap-1">
-                        {{-- 
-                            EDIT PING MESSAGE
-
-                            - the /ping in the href is just a new declared path,
-                                but you will gonna use this on your route
-
-                            - the $ping->id in the action is to know what ping the user choose
-                        --}}
-                        <a href="/ping/{{ $ping->id }}/edit" class="btn btn-ghost btn-xs">
-                            Edit
-                        </a>
-                        {{-- DELETE PING MESSAGE 
-                            - the action="/ping/{{ $ping->id }}" is same function on edit
-
-                            WHY THE DELETE IS INSIDE THE FORM?
-                            - the delete is inside of form bc browsers support GET/POST
-                            - and also to use @csrf     
-                        --}}
-                        <form method="POST" action="/ping/{{ $ping->id }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                onclick="return confirm('Are you sure you want to delete this chirp?')"
-                                class="btn btn-ghost btn-xs text-error">
-                                Delete
-                            </button>
-                        </form>
-                    </div>
+                    @can('update', $ping)
+                        <div class="flex gap-1">
+                            <a href="/ping/{{ $ping->id }}/edit" class="btn btn-ghost btn-xs"> Edit </a>
+                            <form method="POST" action="/ping/{{ $ping->id }}"> 
+                                @csrf 
+                                @method('DELETE') 
+                                <button
+                                    type="submit" 
+                                    onclick="return 
+                                    confirm('Are you sure you want to delete this ping?')"
+                                    class="btn btn-ghost btn-xs text-error"> 
+                                    Delete 
+                                </button>
+                            </form>
+                        </div>
+                    @endcan
                 </div>
                 <p class="mt-1">{{ $ping->message }}</p>
             </div>

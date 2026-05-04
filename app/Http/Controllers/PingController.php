@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pingme;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PingController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -43,10 +46,9 @@ class PingController extends Controller
         ]);
 
         // The "Pingme" must same of the model file for this
-        Pingme::create([
-            'message' => $validated['message'],
-        ]);
-
+        /** @var User $user*/
+        $user = $request->user();
+        $user->pingme()->create($validated);
         return redirect('/')->with('success', 'Ping succesfully created');
     }
 
@@ -63,6 +65,7 @@ class PingController extends Controller
      */
     public function edit(Pingme $ping)
     {
+        $this->authorize('update',$ping);
         return view('pings.edit', compact('ping'));
     }
 
@@ -71,6 +74,7 @@ class PingController extends Controller
      */
     public function update(Request $request, Pingme $ping)
     {
+        $this->authorize('update',$ping);
         // validating ping message
         $validated = $request->validate([
             'message' => 'required|string|max:255|min:5', // validation rules
@@ -89,6 +93,7 @@ class PingController extends Controller
      */
     public function destroy(Pingme $ping)
     {
+        $this->authorize('delete',$ping);
         $ping->delete();
 
         return redirect('/')->with('success', 'Your ping has been deleted!');
